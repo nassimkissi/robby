@@ -1,8 +1,10 @@
-const { Client } = require('discord.js')
-const dotenv = require('dotenv')
-dotenv.config()
-const client = new Client({ intents: 1 })
+const { Client, Collection } = require('discord.js');
+const dotenv = require('dotenv');
+dotenv.config();
+const client = new Client({ intents: 513 });
 
-require('./utils/handlers/EventUtil')(client)
+client.commands = new Collection();
 
-client.login(process.env.DISCORD_TOKEN)
+['CommandUtil', 'EventUtil'].forEach(handler => { require(`./utils/handlers/${handler}`)(client)});
+
+client.login(process.env.DISCORD_TOKEN);
